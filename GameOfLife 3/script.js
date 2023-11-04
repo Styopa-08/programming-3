@@ -40,7 +40,7 @@ function setup() {
                                 let gr = new Grass(x, y)
                                 grassArray.push(gr);
                         }
-                    
+                        
                 }
         }
 
