@@ -1,7 +1,7 @@
-class Dog {
+let LivingCreature = require('./livingCreature')
+class dogArr{
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+       super(x,y)
         this.energy = 8;
         this.directions = [
 

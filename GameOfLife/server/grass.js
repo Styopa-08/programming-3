@@ -1,9 +1,7 @@
-let LivingCreature = require('./LivingCreature')
+let LivingCreature = require('./livingCreature')
 
 module.exports = class Grass extends LivingCreature{
-    constructor(x, y, index) {
-        super(x, y, index);
-    }
+
     mul() {
         this.multiply++;
         if (this.multiply >= 3) {

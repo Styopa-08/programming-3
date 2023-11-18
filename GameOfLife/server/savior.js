@@ -1,7 +1,7 @@
-class Savior {
+LivingCreature = require('./livingCreature') 
+class saviorArr{
     constructor(x, y) {
-        this.x = x
-        this.y = y
+      super(x,y)
         this.energy = 40
         this.directions = []
     }

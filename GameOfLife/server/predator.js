@@ -1,7 +1,7 @@
-class Predator {
+let LivingCreature = require('./livingCreature')
+class predatorArr{
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    super(x,y)
         this.energy = 8;
         this.directions = [
 
@@ -101,7 +101,7 @@ class Predator {
         this.energy--;
         let emptyCell = this.chooseCell(0);
         let newCell = random(emptyCell);
-
+    
         if (newCell) {
             let newX = newCell[0];
             let newY = newCell[1];
