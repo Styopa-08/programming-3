@@ -3,9 +3,7 @@ class predatorArr{
     constructor(x, y) {
     super(x,y)
         this.energy = 8;
-        this.directions = [
 
-        ]
     }
     getNewCordinates() {
         this.directions = [
