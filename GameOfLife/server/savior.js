@@ -1,13 +1,8 @@
-LivingCreature = require('./livingCreature') 
-class saviorArr{
+module.exports = class LivingCreature {
     constructor(x, y) {
-      super(x,y)
-        this.energy = 40
-        this.directions = []
-    }
-
-
-    getNewCoordinates() {
+        this.x = x;
+        this.y = y;
+        this.multiple = 0;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -19,6 +14,7 @@ class saviorArr{
             [this.x + 1, this.y + 1]
         ];
     }
+
 
     chooseCell(char, char1,char2) {
         this.getNewCoordinates()

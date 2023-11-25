@@ -1,8 +1,8 @@
-let express = require('express');
-let app = express();
-let server = require('http').Server(app);
-let io = require('socket.io')(server);
-let fs = require("fs");
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+var fs = require("fs");
 
 app.use(express.static("../client"));
 
@@ -12,7 +12,6 @@ app.get('/', function (req, res) {
 server.listen(3000, () => {
         console.log('connected');
 });
-
 
 function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount, menCount) {
         let matrix = [];
@@ -67,9 +66,7 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, predatorCount,
 }
 
 
-matrix = matrixGenerator(20, 12, 8, 4, 3, 9);
-
-
+matrix = matrixGenerator(20, 12, 8, 4, 3, 9)
 
 io.sockets.emit('send matrix', matrix)
 
@@ -78,12 +75,16 @@ grassArray = [];
 grassEaterArr = [];
 predatorArr = [];
 manArr = [];
+dogArr = [];
+saviorArr = [];
 
 
 Grass = require("./grass")
 GrassEater = require("./grassEater")
 Predator = require("./predator")
-
+Savior = require("./savior")
+Man = require("./man")
+Dog = require("./dog")
 
 function createObject(matrix) {
         for (let y = 0; y < matrix.length; y++) {
@@ -101,43 +102,67 @@ function createObject(matrix) {
                                 let man = new Man(x, y);
                                 manArr.push(man)
                         }
+                        else if (matrix[y][x] == 9) {
+                                let savior = new savior(x, y);
+                                saviorArr.push(savior)
+                        }
+                        else if (matrix[y][x] == 4) {
+                                let dog = new dog(x, y);
+                                dogArr.push(dog)
+                        }
                 }
-        }
-        io.sockets.emit('send matrix', matrix)
+                io.sockets.emit('send matrix', matrix)
 
+
+        }
 
 }
 
+        function game() {
+                for (let i in grassArray) {
+                        grassArray[i].mul()
+                }
 
+                for (let i in grassEaterArr) {
+                        grassEaterArr[i].eat()
+                }
 
-function game() {
-        for (let i in grassArray) {
-                grassArray[i].mul()
+                for (let i in predatorArr) {
+                        predatorArr[i].eat()
+                }
+                for (let i in manArr) {
+                        manArr[i].eat()
+                }
+                io.sockets.emit("send matrix", matrix);
         }
 
-        for (let i in grassEaterArr) {
-                grassEaterArr[i].eat()
+        setInterval(game, 1000)
+
+
+
+
+
+        io.on('connection', function () {
+
+                createObject(matrix);
+
+        });
+
+        let statistics = {
+                grass: 0,
+                grassEater: 0,
+                predator: 0,
+                dog: 0,
+                savior: 0,
+                man: 0,
+
         }
-
-        for (let i in predatorArr) {
-                predatorArr[i].eat()
-        }
-        for (let i in manArr) {
-                manArr[i].eat()
-        }
-        io.sockets.emit("send matrix", matrix);
-}
-
-setInterval(game, 1000)
-
-
-
-
-
-io.on('connection', function () {
-        console.log("Client connected");
-
-        createObject(matrix);
-
-
-});
+        setInterval(function () {
+                statistics.grass = grassArray.length
+                statistics.grassEater = grassEaterArr.length
+                statistics.predator = predatorArr.length
+                statistics.dog = dogArr.length
+                statistics.savior = saviorArr.length
+                statistics.man = manArr.length
+fs.writeFile("statistics.json",json)
+        },1000)

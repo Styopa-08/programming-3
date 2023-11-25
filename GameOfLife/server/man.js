@@ -1,12 +1,8 @@
-let LivingCreature = require('./livingCreature')
-class manArr{
+module.exports = class LivingCreature {
     constructor(x, y) {
-        super((x,y))
-        this.energy = 10
-        this.directions = []
-    }
-
-    getNewCoordinates() {
+        this.x = x;
+        this.y = y;
+        this.multiple = 0;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -18,6 +14,7 @@ class manArr{
             [this.x + 1, this.y + 1]
         ];
     }
+
 
     chooseCell(char, char1) {
         this.getNewCoordinates()

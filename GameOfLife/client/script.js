@@ -1,7 +1,7 @@
+let socket = io();
 
 let side = 40;
 
-///creature arrays
 
 
 function setup() {
